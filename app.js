@@ -48,8 +48,8 @@ app.use(cors());
 //Launching express server
 app.listen (config.port, (err) => {
     if ( !err) {
-        return `Express server listening on http://localhost:${config.port}`;
+        console.log (`Express server listening on http://localhost:${config.port}`);
     }else {
-        return  'Error starting Express Application!'
+        console.log ( 'Error starting Express Application!');
     };
 });
