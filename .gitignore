@@ -1,0 +1,9 @@
+# These files are not committed to the repository
+
+#nodemodules
+node_modules/*
+
+# Development Configuration file 
+dev_config.js
+
+
