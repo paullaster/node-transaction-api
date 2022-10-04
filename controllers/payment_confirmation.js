@@ -3,11 +3,10 @@
  */
 
 //Internal dependencies
-const { response } = require('express');
 const Transaction = require ( '../db/models/transaction_model');
 
 const mpesaPaymentConfirmation = (req, res) => {
-    console.log ('...................................Confirmation ......................');
+    //console.log ('...................................Confirmation ......................');
     let year =  (req.body.TransTime).slice(0, 4);
     let month = (req.body.TransTime).slice(4, 6);
     let day = (req.body.TransTime).slice(6, 8);
@@ -32,7 +31,7 @@ const mpesaPaymentConfirmation = (req, res) => {
     .then ( (transaction) => {
         res
         .status(201)
-        .send ({
+        .json ({
             message: 'Transaction saved to the database successfully',
             id: transaction._id
         });
@@ -40,7 +39,7 @@ const mpesaPaymentConfirmation = (req, res) => {
     .catch ( (err) => {
         res
         .status(500)
-        .send (
+        .json (
             err.massage
         );
     })

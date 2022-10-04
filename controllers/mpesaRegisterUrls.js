@@ -9,7 +9,7 @@ const config = require ( '../config/index');
 
 const mpesaRegisterUrls = (req, res) => {
     const access_token = req.accessToken;
-    const url = 'https://sandbox.safaricom.co.ke/mpesa/c2b/v2/registerurl';
+    const url = 'https://api.safaricom.co.ke/mpesa/c2b/v2/registerurl';
     const headers = {
         Authorization: 'Bearer ' + access_token,
         'Content-Type': 'application/json'
@@ -17,8 +17,8 @@ const mpesaRegisterUrls = (req, res) => {
     let body = {
             "ShortCode":`${config.shortCode}`,
             "ResponseType": "Completed",
-            "ConfirmationURL": "https://b464-105-163-0-142.in.ngrok.io/confirmation",
-            "ValidationURL": "https://b464-105-163-0-142.in.ngrok.io/validation",
+            "ConfirmationURL": "https://node-transaction-api.herokuapp.com/confirmation",
+            "ValidationURL": "https://node-transaction-api.herokuapp.com/validation",
     };
 
     fetch (

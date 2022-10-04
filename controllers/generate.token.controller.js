@@ -9,7 +9,7 @@ const secretKey = config.secretKey;
 
 //Generate token
 const generateToken = (req, res, next) => {
-    const url = 'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials';
+    const url = 'https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials';
     const token = Buffer.from ( consumerKey + ':' + secretKey).toString ('base64');
     const auth = 'Basic ' + token;
     const headers = {

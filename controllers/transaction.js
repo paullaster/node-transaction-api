@@ -10,7 +10,7 @@ const config = require ('../config/index');
 
 
 const mpesaTransactions = (req, res, next) => {
-    const url = 'https://sandbox.safaricom.co.ke/mpesa/c2b/v1/simulate';
+    const url = 'https://api.safaricom.co.ke/mpesa/c2b/v2/simulate';
     //console.log(req.accessToken);
     const auth = 'Bearer ' + req.accessToken;
     const headers = {
@@ -40,7 +40,7 @@ const mpesaTransactions = (req, res, next) => {
         res.json (data);
     })
     .catch ( (err) => {
-        res.send (err.message);
+        res.json (err.message);
     });
 };
 
