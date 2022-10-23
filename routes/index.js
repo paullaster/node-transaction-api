@@ -28,6 +28,6 @@ expressRouter.get ('/similate', tokenGenerator, simulateTransaction);
 expressRouter.get ('/records', transactionRecords);
 
 //Auth routes
-expressRouter.post ('auth/register', register);
+expressRouter.post ('/auth/register', register);
 
 module.exports = expressRouter;

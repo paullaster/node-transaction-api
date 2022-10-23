@@ -2,7 +2,7 @@
  * Registration controller.
  */
 //Dependecies modules
-
+const { validationResult } = require ('express-validator')
 
 
 //Registration func:
