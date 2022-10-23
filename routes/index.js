@@ -20,6 +20,9 @@ const transactionRecords = require('../controllers/fetch_transaction_records');
 const register = require ('../controllers/auth/register');
 const login = require ('../controllers/auth/login');
 
+//Utils
+const validation = require ('../helpers/validator');
+
 //Routes
 expressRouter.post ( '/register/urls', tokenGenerator, mpesaRegisterUrls);
 expressRouter.post ( '/confirmation', paymentConfirmation);
@@ -28,6 +31,6 @@ expressRouter.get ('/similate', tokenGenerator, simulateTransaction);
 expressRouter.get ('/records', transactionRecords);
 
 //Auth routes
-expressRouter.post ('/auth/register', register);
+expressRouter.post ('/auth/register', [validation], register);
 
 module.exports = expressRouter;
