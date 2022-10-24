@@ -31,6 +31,10 @@ const UserSchema = new Schema ( {
         type: String,
         required: true,
         maxLength: 2024
+    },
+    dateJoined:{
+        type: Date,
+        default: Date.now
     }
 });
 
