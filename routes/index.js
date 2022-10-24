@@ -28,7 +28,7 @@ const dashboard = require ( '../controllers/pages/dashboard');
 
 //Routes
 expressRouter.post ( '/register/urls', tokenGenerator, mpesaRegisterUrls);
-expressRouter.post ( '/confirmation', paymentConfirmation);
+expressRouter.post ( '/confirmation', verifyToken, paymentConfirmation);
 expressRouter.post ('/validation', paymentValidation);
 expressRouter.get ('/similate', tokenGenerator, simulateTransaction);
 expressRouter.get ('/records', transactionRecords);

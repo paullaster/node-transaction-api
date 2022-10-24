@@ -25,15 +25,22 @@ const verifyToken = (req, res, next) => {
     //Authorization token value:
     const authorizationToken = token.slice ( 7, token.length);
     //Verify token:
-    const verified = jsonwebtoken.verify (authorizationToken, tokenSecret, {
+    jsonwebtoken.verify (authorizationToken, tokenSecret, {
         algorithms: 'HS512'
+    }, (error, verified) => {
+        if ( error ) {
+            return (
+                res 
+                .status( 404 )
+                .json ( {
+                    error: error.message,
+                })
+            );
+        };
+        // setting sharing verified user to the next middleware:
+        req.user = verified;
+        next ();
     })
-    res
-    .status (200)
-    .json ( {
-        message: authorizationToken,
-    })
-
 };
 
 //Export verfication middleware
