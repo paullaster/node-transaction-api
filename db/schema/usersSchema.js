@@ -30,6 +30,9 @@ const UserSchema = new Schema ( {
     password: {
         type: String,
         required: true,
-        
+        maxLength: 2024
     }
-})
+});
+
+// Export user schema
+module.exports = UserSchema;
