@@ -4,6 +4,7 @@
 //Dependecies
 const bcrypt = require ('bcrypt');
 const { validationResult } = require ('express-validator');
+const jsonwebtoken = require ( 'jsonwebtoken');
 
 //Internal modules:
 const user = require ('../../db/models/usersModel');
@@ -35,12 +36,32 @@ const login = (req, res) => {
         //Checking if the password is correct:
         bcrypt.compare (password, data.password)
         .then ( ( response) => {
-            
+
+            if ( !response ) {
+                return (
+                    res
+                    .status (400)
+                    .json ( {
+                        message: 'Incorrect password!',
+                    })
+                );
+            };
+
+            // Creating token:
+            jsonwebtoken.sign (data._id, )
+            res
+            .status (201)
+            .json ( {
+                body: response,
+            });
         })
-        res
-        .status (201)
-        .json ( {
-            body: data,
+        .catch ( (error) => {
+            res
+            .status (500)
+            .json ( {
+                error: error.message,
+                code: error.code,
+            });
         });
     })
     .catch ( (error) => {
@@ -48,6 +69,7 @@ const login = (req, res) => {
         .status (500)
         .json ( {
             error: error.message,
+            code: error.code,
         });
     });
 };
