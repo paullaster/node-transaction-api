@@ -7,8 +7,8 @@ const UserSchema = new Schema ( {
     phoneNumber: {
         type: String,
         required: true,
-        maxLength: 12,
-        minLength: 12,
+        maxLength: 13,
+        minLength: 13,
         unique: true,
     },
     firstName: {

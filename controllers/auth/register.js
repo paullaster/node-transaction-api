@@ -38,28 +38,30 @@ const register = (req, res, next) => {
         });
         //saving user to database
         user.save ()
-        then ( (user) => {
+        .then ( (details) => {
             res
-            .status (200)
+            .status (201)
             .json ( {
-                message: `User ${user.firstName} ${user.lastName} with ID: ${user._id} was saved successfully!.`,
+                message: `User ${details.firstName} ${details.lastName} with ID: ${details._id} was saved successfully!.`,
             });
         })
         .catch ( (error) => {
-            error.message = 'Error while saving user!'
+            //error.message = 'Error while saving user!'
             res
             .status(500)
             .json ( {
-                error: error.message
+                error: error.message,
+                code: error.code
             } );
             });
     })
     .catch ( (error) => {
-        error.message = 'Error hashing password';
+        //error.message = 'Error hashing password';
         res
         .status (500)
         .json ( {
             error: error.message,
+            code: error.code
         });
     });
 };
