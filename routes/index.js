@@ -4,6 +4,7 @@
 //Importing express routing object
 const express = require ( 'express' );
 const expressRouter = express.Router();
+const { check } = require ('express-validator');
 
 /**
  * Importing controllers
@@ -31,6 +32,12 @@ expressRouter.get ('/similate', tokenGenerator, simulateTransaction);
 expressRouter.get ('/records', transactionRecords);
 
 //Auth routes
-expressRouter.post ('/auth/register', [validation], register);
+expressRouter.post ('/auth/register', 
+    check ('phoneNumber').not ().trim ().isEmpty ().isLength ({min:10, max: 10}).escape ().withMessage ("Phone number is incorrect!"),
+    check ('firstName').not ().trim ().isEmpty ().isLength ( {min: 3, max: 16}).escape ().withMessage ("First name to not meet the requirements!"),
+    check ('lastName').not ().trim ().isEmpty ().isLength ( {min: 3, max: 16}).escape ().withMessage ("Last name to not meet the requirements!"),
+    check ('email').trim ().isEmail ().normalizeEmail ().escape ().withMessage (" email is incorrect!"),
+    check ('password').not ().trim ().isEmpty ().isStrongPassword ().escape ().withMessage ("Password do not meet the requirements!")
+, register);
 
 module.exports = expressRouter;
