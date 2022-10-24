@@ -8,4 +8,4 @@ const mongoose = require ('mongoose');
 const UserSchema = require ( '../schema/usersSchema');
 
 //Exporting user model
-module.exports = (' Users', UserSchema);
+module.exports = mongoose.model (' Users', UserSchema);
