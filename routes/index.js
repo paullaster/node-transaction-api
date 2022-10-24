@@ -7,7 +7,7 @@ const expressRouter = express.Router();
 const { check } = require ('express-validator');
 
 /**
- * Importing controllers
+ * Importing controllers and middlewares
  */
 //const passwordGenerator = require ( '../controllers/generate.password.controller');
 const tokenGenerator = require ( '../controllers/generate.token.controller');
@@ -17,12 +17,14 @@ const paymentValidation = require ( '../controllers/payment_validation');
 const simulateTransaction = require ( '../controllers/transaction');
 const transactionRecords = require('../controllers/fetch_transaction_records');
 
+const verifyToken = require ( '../middleware/tokenVerification');
+
 //Auth controls
 const register = require ('../controllers/auth/register');
 const login = require ('../controllers/auth/login');
 
-//Utils
-const validation = require ('../helpers/validator');
+//importing pages:
+const dashboard = require ( '../controllers/pages/dashboard');
 
 //Routes
 expressRouter.post ( '/register/urls', tokenGenerator, mpesaRegisterUrls);
@@ -44,5 +46,9 @@ expressRouter.post ( '/auth/login',
     check ('phoneNumber').not ().trim ().isEmpty ().isLength ({min:10, max: 10}).escape ().withMessage ("Phone number is incorrect!"),
     check ('password').not ().trim ().isEmpty ().isStrongPassword ().escape ().withMessage ("Password do not meet the requirements!") 
 , login)
+
+//Protect pages:
+expressRouter.get ( '/protected/dashboard', verifyToken ,dashboard);
+
 
 module.exports = expressRouter;
