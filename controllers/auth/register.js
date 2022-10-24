@@ -5,6 +5,8 @@
 const { validationResult } = require ('express-validator');
 const bcrypt = require ('bcrypt');
 
+//Internal modules:
+const newUser = require ('../../db/models/usersModel');
 
 //Registration func:
 const register = (req, res, next) => {
@@ -27,15 +29,30 @@ const register = (req, res, next) => {
     //Hashing password
     bcrypt.hash (password, 12)
     .then ( (hash) => {
-        res
-        .status(200)
-        .json ( {
-             phoneNumber: mobile,
-             firstName: firstName,
-             lastName: lastName,
-             email: email,
-             password: hash
-         });
+        let user = new newUser ({
+            phoneNumber: mobile,
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: hash
+        });
+        //saving user to database
+        user.save ()
+        then ( (user) => {
+            res
+            .status (200)
+            .json ( {
+                message: `User ${user.firstName} ${user.lastName} with ID: ${user._id} was saved successfully!.`,
+            });
+        })
+        .catch ( (error) => {
+            error.message = 'Error while saving user!'
+            res
+            .status(500)
+            .json ( {
+                error: error.message
+            } );
+            });
     })
     .catch ( (error) => {
         error.message = 'Error hashing password';
