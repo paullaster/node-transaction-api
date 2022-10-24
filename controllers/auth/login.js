@@ -8,6 +8,7 @@ const jsonwebtoken = require ( 'jsonwebtoken');
 
 //Internal modules:
 const user = require ('../../db/models/usersModel');
+const {tokenSecret} = require ( '../../config/index');
 
 //Login middleware
 const login = (req, res) => {
@@ -48,11 +49,23 @@ const login = (req, res) => {
             };
 
             // Creating token:
-            jsonwebtoken.sign (data._id, )
+            let token = jsonwebtoken.sign ( {id:data._id}, tokenSecret, {
+                algorithm: 'HS512',
+                expiresIn: '3600s'
+            });
             res
             .status (201)
+            .header (
+                {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token,
+                    'Accept-Language': 'en-US,en;q=0.9'
+                }
+            )
             .json ( {
-                body: response,
+                phoneNumber: data.phoneNumber,
+                name: data.firstName + ' ' + data.lastName,
+                accessToken: token,
             });
         })
         .catch ( (error) => {
