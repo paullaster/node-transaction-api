@@ -40,4 +40,9 @@ expressRouter.post ('/auth/register',
     check ('password').not ().trim ().isEmpty ().isStrongPassword ().escape ().withMessage ("Password do not meet the requirements!")
 , register);
 
+expressRouter.post ( '/auth/login', 
+    check ('phoneNumber').not ().trim ().isEmpty ().isLength ({min:10, max: 10}).escape ().withMessage ("Phone number is incorrect!"),
+    check ('password').not ().trim ().isEmpty ().isStrongPassword ().escape ().withMessage ("Password do not meet the requirements!") 
+, login)
+
 module.exports = expressRouter;
